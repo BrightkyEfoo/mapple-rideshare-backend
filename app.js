@@ -1,5 +1,5 @@
 import express from 'express';
-import { dbInit } from './db/sequelize.js';
+import { dbInit } from './db/Sequelize.js';
 import cors from 'cors';
 import morgan from 'morgan';
 import { pageRouter } from './Routes/FrontEnd/index.js';
