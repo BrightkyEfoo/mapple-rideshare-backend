@@ -22,7 +22,7 @@ app
 dbInit();
 
 app.get('/', (req, res) => {
-  res.send('hello, welcome to adn backend by DMServices');
+  res.send('hello, welcome to maple-rideshare backend by DMServices');
 });
 
 app.use('/front-end', pageRouter);
