@@ -1,4 +1,4 @@
-import { FrontEndView } from '../../sequelize.js';
+import { FrontEndView } from '../../Sequelize.js';
 
 const homePages = [
   {
