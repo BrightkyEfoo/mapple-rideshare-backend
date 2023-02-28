@@ -5,7 +5,7 @@ const navBars = [
     language: 'EN',
     name: 'navbar',
     content: {
-      logo: 'http://localhost:9001/public/images/logo.jpeg',
+      logo: 'https://mapple-rideshare-backend-nau5m.ondigitalocean.app/public/images/logo.jpeg',
       links: [
         {
           name: 'Home',

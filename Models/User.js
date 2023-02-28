@@ -103,7 +103,7 @@ const UserModel = sequelize => {
       },
       profilePic:{
         type:DataTypes.STRING,
-        defaultValue : 'http://localhost:9001/public/images/profile.jpg'
+        defaultValue : 'https://mapple-rideshare-backend-nau5m.ondigitalocean.app/public/images/profile.jpg'
       }
     },
     {
