@@ -1,4 +1,4 @@
-import { FrontEndView } from '../../db/sequelize.js';
+import { FrontEndView } from '../../db/Sequelize.js';
 
 export const getPage = (req, res) => {
   const { limit, order } = req.query;

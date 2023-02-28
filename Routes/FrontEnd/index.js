@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { FrontEndView } from '../../db/sequelize.js';
+import { FrontEndView } from '../../db/Sequelize.js';
 import { getOnePage, getPage } from './helpers.js';
 
 export const pageRouter = Router();

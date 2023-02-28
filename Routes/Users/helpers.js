@@ -1,4 +1,4 @@
-import { User } from '../../db/sequelize.js';
+import { User } from '../../db/Sequelize.js';
 import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
