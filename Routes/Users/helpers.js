@@ -56,42 +56,44 @@ export const createUser = (req, res) => {
     password,
     sex,
     userName,
-  }).then(user => {
-    let code = String(parseInt(999999 * Math.random())).padStart(6, 0);
-
-    const mailOptions = {
-      from: 'mapple-rideshare@dmservices.dev',
-      to: email,
-      subject: 'Validate your email',
-      text: `the code of your registration is : ${code}`,
-    };
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        Codes.push({
-          email,
-          code: parseInt(code),
-        });
-        console.log('codes', Codes);
-        console.log('Email sent: ' + info.response);
-      }
-    });
-    const token = jwt.sign(
-      {
-        userId: user.id,
-        email: user.email,
-        isValidated: user.isValidated,
-      },
-      private_key,
-      {
-        expiresIn: '24h',
-      }
-    );
-    res.json({ msg: 'succes', user, token });
-  }).catch(err => {
-    res.status(400).json({msg:'something went wrong' , err})
   })
+    .then(user => {
+      let code = String(parseInt(999999 * Math.random())).padStart(6, 0);
+
+      const mailOptions = {
+        from: 'mapple-rideshare@dmservices.dev',
+        to: email,
+        subject: 'Validate your email',
+        text: `the code of your registration is : ${code}`,
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          Codes.push({
+            email,
+            code: parseInt(code),
+          });
+          console.log('codes', Codes);
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      const token = jwt.sign(
+        {
+          userId: user.id,
+          email: user.email,
+          isValidated: user.isValidated,
+        },
+        private_key,
+        {
+          expiresIn: '24h',
+        }
+      );
+      res.json({ msg: 'succes', user, token });
+    })
+    .catch(err => {
+      res.status(400).json({ msg: 'something went wrong', err });
+    });
 };
 
 export const verifyEmail = (req, res) => {
@@ -189,7 +191,9 @@ export const userLogin = (req, res) => {
                 expiresIn: '24h',
               }
             );
-            return res.json({ msg: 'succes', token });
+            let temp = user.toJSON();
+            delete temp.password;
+            return res.json({ msg: 'succes', user: temp, token });
           } else {
             return res.status(403).json({ msg: 'you are not authorized' });
           }
@@ -199,6 +203,60 @@ export const userLogin = (req, res) => {
         });
     })
     .catch(err => {
-      return res.status(404).json({ msg: 'user not found' , err });
+      return res.status(404).json({ msg: 'user not found', err });
     });
+};
+
+export const updateUser = (req, res) => {
+  const { userId, userSubmit } = req.body;
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ msg: 'userId should not be empty please fill it and try again' });
+  } else {
+    if (!req.user.isValidated) {
+      res
+        .status(403)
+        .json({ msg: 'Your email is not verified, please do it before' });
+    } else {
+      User.findByPk(userId)
+        .then(userToUpdate => {
+          if (userSubmit.password) {
+            bcrypt.hash(userSubmit.password, 10, (err, hash) => {
+              if (err) {
+                return err;
+              }
+              userToUpdate
+                .update({ ...userSubmit, password: hash })
+                .then(user => {
+                  let temp = user.toJSON();
+                  delete temp.password;
+                  res.json({ msg: 'success', user: temp });
+                })
+                .catch(err => {
+                  return res
+                    .status(400)
+                    .json({ msg: 'Something went wrong', err });
+                });
+            });
+          } else {
+            userToUpdate
+              .update({ ...userSubmit })
+              .then(user => {
+                let temp = user.toJSON();
+                delete temp.password;
+                res.json({ msg: 'success', user: temp });
+              })
+              .catch(err => {
+                return res
+                  .status(400)
+                  .json({ msg: 'Something went wrong', err });
+              });
+          }
+        })
+        .catch(err => {
+          return res.status(400).json({ msg: 'Something went wrong', err });
+        });
+    }
+  }
 };
