@@ -6,18 +6,18 @@ import { HomePageFiller } from './Fillers/FrontEndViewModel/HomePageFiller.js';
 import { riderLoginFormFiller } from './Fillers/FrontEndViewModel/RiderLoginForm.js';
 import UserModel from '../Models/User.js';
 
-// const sequelize = new Sequelize('mapple-rideshare', 'mapple-rideshare', 'AVNS_MHgW68zXzO4IigxVh0k', {
-//   host: 'adn-do-user-7091938-0.b.db.ondigitalocean.com',
-//   port : 25060,
-//   dialect: 'mysql',
-//   logging: false,
-// })
-
-const sequelize = new Sequelize('mapple-rideshare', 'root', '', {
-  host: 'localhost',
-  dialect: 'mariadb',
+const sequelize = new Sequelize('mapple-rideshare', 'mapple-rideshare', 'AVNS_MHgW68zXzO4IigxVh0k', {
+  host: 'adn-do-user-7091938-0.b.db.ondigitalocean.com',
+  port : 25060,
+  dialect: 'mysql',
   logging: false,
-});
+})
+
+// const sequelize = new Sequelize('mapple-rideshare', 'root', '', {
+//   host: 'localhost',
+//   dialect: 'mariadb',
+//   logging: false,
+// });
 
 export const FrontEndView = FrontEndViewModel(sequelize);
 export const User = UserModel(sequelize);
