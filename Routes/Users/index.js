@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createUser, updateUser, userLogin, verifyEmail } from './helpers.js';
+import { createUser, getUsers, updateUser, userLogin, verifyEmail } from './helpers.js';
 import auth from '../../auth/auth.js';
 
 // const transporter = nodemailer.createTransport({
@@ -27,4 +27,4 @@ UserRouter.route('/verify-email').post(auth , verifyEmail);
 UserRouter.route('/login').post(userLogin);
 
 UserRouter.use(auth)
-UserRouter.route('/').put(updateUser)
+UserRouter.route('/').put(updateUser).get(getUsers)

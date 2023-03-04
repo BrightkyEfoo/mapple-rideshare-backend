@@ -6,6 +6,7 @@ import { pageRouter } from './Routes/FrontEnd/index.js';
 import { UserRouter } from './Routes/Users/index.js';
 import auth from './auth/auth.js';
 import addImageToServer from './Routes/addImageToServer.js';
+import { AdminRouter } from './Routes/Admin/index.js';
 
 const app = express();
 const port = process.env.PORT || 9001;
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 app.use('/front-end', pageRouter);
 app.use('/user', UserRouter);
+app.use('/admin', AdminRouter);
 
 app.use(auth)
 

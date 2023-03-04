@@ -116,7 +116,7 @@ const UserModel = sequelize => {
               );
             }
             user.update({ password: hash }).then(usertemp => {
-              console.log('user', usertemp.toJSON());
+              // console.log('user', usertemp.toJSON());
             });
           });
         },

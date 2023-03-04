@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { private_key } from '../../auth/private_key.js';
+import { Op } from 'sequelize';
 
 export let Codes = [];
 
@@ -18,6 +19,7 @@ const transporter = nodemailer.createTransport({
 
 export const createUser = (req, res) => {
   const {
+    accessLevel,
     acceptNewsletters,
     city,
     country,
@@ -31,6 +33,8 @@ export const createUser = (req, res) => {
   } = req.body;
   if (
     !userName ||
+    (!accessLevel && accessLevel !== 0) ||
+    accessLevel > 1 ||
     // !acceptNewsletters ||
     !city ||
     !country ||
@@ -43,7 +47,12 @@ export const createUser = (req, res) => {
     !userName ||
     !sex
   ) {
-    return res.status(400).json({ msg: 'all fields are required' });
+    return res.status(400).json({
+      msg:
+        accessLevel > 1
+          ? 'you cant have an accesslevel greater then 1'
+          : 'all fields are required',
+    });
   }
   User.create({
     acceptNewsletters,
@@ -56,6 +65,7 @@ export const createUser = (req, res) => {
     password,
     sex,
     userName,
+    accessLevel,
   })
     .then(user => {
       let code = String(parseInt(999999 * Math.random())).padStart(6, 0);
@@ -83,6 +93,7 @@ export const createUser = (req, res) => {
           userId: user.id,
           email: user.email,
           isValidated: user.isValidated,
+          accessLevel: user.accessLevel,
         },
         private_key,
         {
@@ -126,6 +137,7 @@ export const verifyEmail = (req, res) => {
                   userId: user.id,
                   email: user.email,
                   isValidated: user.isValidated,
+                  accessLevel: user.accessLevel,
                 },
                 private_key,
                 {
@@ -150,11 +162,21 @@ export const verifyEmail = (req, res) => {
 };
 
 export const userLogin = (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, accessLevel } = req.body;
   User.findOne({ where: { email } })
     .then(user => {
       if (!user) {
         return res.status(404).json({ msg: 'user not found' });
+      }
+      if (accessLevel !== user.accessLevel) {
+        return res.status(404).json({
+          msg: `It looks like you are a ${
+            user.accessLevel === 0 ? 'rider' : 'driver'
+          }, please click the right login button`,
+        });
+      }
+      if(accessLevel > 1){
+        return res.status(301).json({msg : 'you can do that'})
       }
       bcrypt
         .compare(password, user.password)
@@ -258,5 +280,65 @@ export const updateUser = (req, res) => {
           return res.status(400).json({ msg: 'Something went wrong', err });
         });
     }
+  }
+};
+
+export const getUsers = (req, res) => {
+  let { userId } = req.query;
+  userId = parseInt(userId)
+  // const {limit}
+  if(!userId){
+    return res.status(400).json({msg : 'all fields are requiered'})
+  }
+  if (req.user.accessLevel < 2) {
+    return res.status(401).json({ msg: 'unauthorized' });
+  } else {
+    User.findByPk(userId)
+      .then(user => {
+        if (user.accessLevel === req.user.accessLevel && user.id === userId) {
+          if (req.user.accessLevel === 2) {
+            User.findAll({
+              where: {
+                accessLevel: {
+                  [Op.lte]: 2,
+                },
+              },
+              attributes: { exclude: ['password'] },
+            })
+              .then(users => {
+                res.json({ msg: 'success', users });
+              })
+              .catch(err => {
+                return res
+                  .status(400)
+                  .json({ msg: 'something went wrong', err });
+              });
+          } else if (req.user.accessLevel === 3) {
+            User.findAll({
+              where: {
+                id: {
+                  [Op.not]: userId,
+                },
+              },
+              attributes: { exclude: ['password'] },
+            })
+              .then(users => {
+                res.json({ msg: 'success', users });
+              })
+              .catch(err => {
+                return res
+                  .status(400)
+                  .json({ msg: 'something went wrong', err });
+              });
+          }
+        }else {
+          return res.status(401).json({mag : 'aie aie not allowed'})
+        }
+      })
+      .catch(err => {
+        res
+          .status(400)
+          .json({ msg: 'something went wrong went retriving the admin', err });
+      });
   }
 };
