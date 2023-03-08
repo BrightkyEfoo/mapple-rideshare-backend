@@ -68,6 +68,11 @@ const UserModel = sequelize => {
         allowNull: false,
         defaultValue: false,
       },
+      allowed: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -86,6 +91,9 @@ const UserModel = sequelize => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      vehicleNumber : {
+        type:DataTypes.STRING
+      },
       accessLevel: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -95,7 +103,7 @@ const UserModel = sequelize => {
             console.log('value', value);
             if (![0, 1, 2, 3].includes(value)) {
               throw Error(
-                'the value of an accessLevel should be either 0 or 1'
+                'the value of an accessLevel should be 0,1,2 or 3'
               );
             }
           },

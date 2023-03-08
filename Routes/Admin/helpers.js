@@ -4,13 +4,13 @@ import jwt from 'jsonwebtoken';
 import { private_key } from '../../auth/private_key.js';
 
 export const adminLogin = (req, res) => {
-  const { email, password, accessLevel } = req.body;
+  const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ msg: 'all fields are requiered' });
   }
   User.findOne({ where: { email } })
     .then(user => {
-      if (user.accessLevel <= 1 || user.accessLevel !== accessLevel) {
+      if (user.accessLevel <= 1) {
         res.status(401).json({ msg: 'not authorized' });
       } else {
         bcrypt
@@ -24,6 +24,7 @@ export const adminLogin = (req, res) => {
                   userId: user.id,
                   accessLevel: user.accessLevel,
                   email: user.email,
+                  isValidated : true
                 },
                 private_key,
                 {

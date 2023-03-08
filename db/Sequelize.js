@@ -8,6 +8,9 @@ import UserModel from '../Models/User.js';
 import { ridersAndDriversFiller } from './Fillers/user/RidersAndDriversFiller.js';
 import { AdminLoginFormsFiller } from './Fillers/FrontEndViewModel/AdminLoginFormFiller.js';
 import { adminsFiller } from './Fillers/user/AdminFiller.js';
+import { BookRideFiller } from './Fillers/FrontEndViewModel/BookRide.js';
+import BookingModel from '../Models/Booking.js';
+import { bookingFiller } from './Fillers/bookingFiller/BookingFiller.js';
 
 const sequelize = new Sequelize('mapple-rideshare', 'mapple-rideshare', 'AVNS_MHgW68zXzO4IigxVh0k', {
   host: 'adn-do-user-7091938-0.b.db.ondigitalocean.com',
@@ -24,6 +27,26 @@ const sequelize = new Sequelize('mapple-rideshare', 'mapple-rideshare', 'AVNS_MH
 
 export const FrontEndView = FrontEndViewModel(sequelize);
 export const User = UserModel(sequelize);
+export const Booking = BookingModel(sequelize);
+
+// User.hasMany(Booking, {
+//   foreignKey: 'id'
+// });
+Booking.belongsTo(User, {
+  as: 'rider',
+  foreignKey: {
+    // allowNull : false,
+    name: 'RiderId',
+  },
+});
+
+Booking.belongsTo(User, {
+  as: 'driver',
+  foreignKey: {
+    // allowNull : false,
+    name: 'DriverId',
+  },
+});
 
 export const dbInit = () => {
   return sequelize
@@ -36,7 +59,11 @@ export const dbInit = () => {
       riderLoginFormFiller();
       ridersAndDriversFiller();
       AdminLoginFormsFiller();
-      adminsFiller()
+      adminsFiller();
+      BookRideFiller();
+      setTimeout(() => {
+        bookingFiller();
+      }, 1000);
       console.log('database connection successfully etablished');
     })
     .catch(err =>

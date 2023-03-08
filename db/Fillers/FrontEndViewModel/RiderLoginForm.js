@@ -277,6 +277,85 @@ const riderLoginForms = [
       },
     },
   },
+  {
+    language: 'EN',
+    name: 'createuserform',
+    content: {
+      register: {
+        first: {
+          title: 'Create or Update a User',
+          inputs: [
+            {
+              type: 'text',
+              title: 'Username',
+              placeholder: 'type your username',
+            },
+            {
+              type: 'email',
+              title: 'Email',
+              placeholder: 'type your email',
+            },
+            {
+              type: 'password',
+              title: 'Password',
+              placeholder: 'type your password',
+            },
+            {
+              type: 'password',
+              title: 'Password again',
+              placeholder: 're-type your password',
+            },
+            {
+              type: 'text',
+              title: 'First name',
+              placeholder: 'type your first name',
+            },
+            {
+              type: 'text',
+              title: 'Last name',
+              placeholder: 'type your last name',
+            },
+            {
+              type: 'radio',
+              title: ['Male', 'Female'],
+            },
+            {
+              type: 'phone',
+              title: 'Phone number',
+            },
+            {
+              type: 'select',
+              title: 'Country',
+              values: [
+                {
+                  title: 'Canada',
+                  abbr: 'CA',
+                },
+                {
+                  title: 'USA',
+                  abbr: 'US',
+                },
+              ],
+              subTitle: 'City',
+            },
+            {
+              type: 'checkbox',
+              title: 'He want to recieve news letters',
+              name : 'acceptNewsletters' //this name is only for the web frontend purpose, without this it won't work
+            },
+            {
+              type: 'number',
+              title : 'Access Level',
+              name : 'accessLevel'
+            }
+          ],
+          button: {
+            title: 'Submit',
+          },
+        },
+      },
+    },
+  },
 ];
 
 export const riderLoginFormFiller = () => {

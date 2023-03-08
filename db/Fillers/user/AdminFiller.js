@@ -16,27 +16,36 @@ const admins = [
   },
 ];
 
-// const drivers = [
-//   {
-//     userName: 'johndriverer1',
-//     firstName: 'Driver',
-//     lastName: 'John',
-//     sex: 'M',
-//     phone: '+23765655585',
-//     country: 'CA',
-//     city: 'Angus',
-//     isValidated: true,
-//     email: 'brightefoo@gmail.com',
-//     password: 'driver1234',
-//     accessLevel : 1
-//   },
-// ];
+const subadmin = [
+  {
+    userName: 'subadmin0',
+    firstName: 'subadmin',
+    lastName: 'John',
+    sex: 'M',
+    phone: '+23768655585',
+    country: 'CA',
+    city: 'Angus',
+    isValidated: true,
+    email: 'subadmin@gmail.com',
+    password: 'driver1234',
+    accessLevel : 2
+  },
+];
 
 export const adminsFiller = () => {
   admins.map((el, i) => {
     User.create({ ...el })
       .then(() => {
-        console.log('rider', i);
+        console.log('admin', i);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  });
+  subadmin.map((el, i) => {
+    User.create({ ...el })
+      .then(() => {
+        console.log('subadmin', i);
       })
       .catch(err => {
         console.log('err', err);

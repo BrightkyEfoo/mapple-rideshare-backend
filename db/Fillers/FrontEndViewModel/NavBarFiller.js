@@ -34,6 +34,17 @@ const navBars = [
       ],
     },
   },
+  {
+    language : 'EN',
+    name : 'navbar2',
+    content : {
+      logo : 'https://mapple-rideshare-backend-nau5m.ondigitalocean.app/public/images/logo.jpeg',
+      buttons : {
+        isDriver : 'switch to rider',
+        isRider : 'switch to driver'
+      }
+    }
+  }
 ];
 
 

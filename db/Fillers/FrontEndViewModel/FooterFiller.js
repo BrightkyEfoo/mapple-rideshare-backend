@@ -67,6 +67,32 @@ const footers = [
       }
     },
   },
+  {
+    language : 'EN',
+    name : 'footer2',
+    content : {
+      logo : 'https://mapple-rideshare-backend-nau5m.ondigitalocean.app/public/images/logo.jpeg',
+      links: [
+        {
+          name: 'About',
+          url: '/about',
+        },
+        {
+          name: "FAQ's",
+          url: '/faq',
+        },
+        {
+          name: 'Terms and Condition',
+          url: '/terms-condition',
+        },
+        {
+          name: 'Privacy Policy',
+          url: '/privacy',
+        },
+      ],
+      title : '© 2021. Maple Ride. All rights Reserved.'
+    }
+  }
 ];
 
 
