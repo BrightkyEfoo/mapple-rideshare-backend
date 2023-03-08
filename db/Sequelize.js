@@ -63,7 +63,7 @@ export const dbInit = () => {
       BookRideFiller();
       setTimeout(() => {
         bookingFiller();
-      }, 1000);
+      }, 2000);
       console.log('database connection successfully etablished');
     })
     .catch(err =>

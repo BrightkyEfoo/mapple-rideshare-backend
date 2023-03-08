@@ -1,6 +1,6 @@
 import { Booking, User } from '../../db/Sequelize.js';
 import nodemailer from 'nodemailer';
-import bcrypt, { hash } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { private_key } from '../../auth/private_key.js';
 import { Op } from 'sequelize';
