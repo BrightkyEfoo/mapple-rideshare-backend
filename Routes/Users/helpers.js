@@ -500,3 +500,30 @@ export const getHistoryRide = (req, res) => {
       res.status(400).json({ msg: 'something went wrong', err });
     });
 };
+
+export const getAllRideHistory = (req, res) => {
+  const { userId } = req.query;
+  if (!userId || req.user.accessLevel < 2) {
+    return res.status(401).json({ msg: 'unauthorized 1' });
+  }
+
+  Booking.findAll({
+    include: [
+      { model: User, as: 'rider' },
+      { model: User, as: 'driver' },
+    ],
+  })
+    .then(history => {
+      
+      const Temp = history.map(el => {
+        let temp = el.toJSON()
+        delete temp.rider.password
+        delete temp.driver.password
+        return {...temp}
+      })
+      res.json({ msg: 'success', history : Temp });
+    })
+    .catch(err => {
+      res.status(400).json({ msg: 'something went wrong', err });
+    });
+};

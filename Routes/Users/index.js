@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { adminCreateUser, adminUpdateUser, createUser, deleUser, getHistoryRide, getUsers, subAdminUpdate, updateUser, userLogin, verifyEmail } from './helpers.js';
+import { adminCreateUser, adminUpdateUser, createUser, deleUser, getAllRideHistory, getHistoryRide, getUsers, subAdminUpdate, updateUser, userLogin, verifyEmail } from './helpers.js';
 import auth from '../../auth/auth.js';
 import { MAdminVerif } from './middlewares/adminVerif.js';
 import { MSubAdminVerif } from './middlewares/MSubAdminVerif.js';
@@ -33,3 +33,4 @@ UserRouter.route('/').put(updateUser).get(getUsers)
 UserRouter.route('/admin').post(MAdminVerif,adminCreateUser).delete(MAdminVerif , deleUser).put(MAdminVerif , adminUpdateUser)
 UserRouter.route('/subadmin').put(MSubAdminVerif , subAdminUpdate)
 UserRouter.route('/bookride').get(getHistoryRide)
+UserRouter.route('/ride').get(getAllRideHistory)
