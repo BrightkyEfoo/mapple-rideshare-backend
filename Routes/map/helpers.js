@@ -6,6 +6,7 @@ export const getDriversForARide = (req, res) => {
   let str = req.query.start.toLowerCase();
   str = str.charAt(0).toUpperCase() + str.slice(1);
   console.log('temp', str);
+  
   User.findAll({ where: { accessLevel: 1, city: str } })
     .then(drivers => {
       res.json({ msg: 'success', drivers });

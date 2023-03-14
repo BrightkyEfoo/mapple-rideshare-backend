@@ -28,7 +28,7 @@ const AdminLoginForms = [
         link: '/forgot-password',
       },
       footer: {
-        title: '© 2021. Maple Ride. All rights Reserved.',
+        title: '© 2022. Maple Rideshare. All rights Reserved.',
       },
     },
   },
@@ -62,7 +62,7 @@ const subAdminLoginForms = [
         link: '/forgot-password',
       },
       footer: {
-        title: '© 2021. Maple Ride. All rights Reserved.',
+        title: '© 2022. Maple Rideshare. All rights Reserved.',
       },
     },
   },

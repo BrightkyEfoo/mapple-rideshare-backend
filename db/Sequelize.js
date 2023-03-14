@@ -12,7 +12,7 @@ import { BookRideFiller } from './Fillers/FrontEndViewModel/BookRide.js';
 import BookingModel from '../Models/Booking.js';
 import { bookingFiller } from './Fillers/bookingFiller/BookingFiller.js';
 
-const sequelize = new Sequelize('mapple-rideshare', 'mapple-rideshare', 'AVNS_MHgW68zXzO4IigxVh0k', {
+const sequelize = new Sequelize('dev2', 'user2', 'AVNS_v5B0Kso6FY6ZdeJuEcG', {
   host: 'adn-do-user-7091938-0.b.db.ondigitalocean.com',
   port : 25060,
   dialect: 'mysql',

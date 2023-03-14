@@ -62,7 +62,7 @@ const footers = [
             // span : ''
         },
         right : {
-            title : '© 2021. Maple Ride. All rights Reserved.'
+            title : '© 2022. Maple Rideshare. All rights Reserved.'
         }
       }
     },
@@ -90,7 +90,7 @@ const footers = [
           url: '/privacy',
         },
       ],
-      title : '© 2021. Maple Ride. All rights Reserved.'
+      title : '© 2022. Maple Rideshare. All rights Reserved.'
     }
   }
 ];
